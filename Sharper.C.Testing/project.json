@@ -1,0 +1,16 @@
+{ "version": "0.1.0-*"
+, "description": "Properties and Arbitrary instances"
+, "authors": [ "Jeremy Hughes" ]
+, "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing"
+, "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt"
+
+, "dependencies":
+  { "FsCheck": "2.2.1"
+  , "Fuchu.FsCheck": "1.0.1"
+  , "FSharp.Core": "4.0.0.1"
+  }
+
+, "frameworks":
+  { "dnx451": { }
+  }
+}
