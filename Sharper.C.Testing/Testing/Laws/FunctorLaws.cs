@@ -1,15 +1,15 @@
 using System;
 using FsCheck;
-using Fuchu;
 
 namespace Sharper.C.Testing.Laws
 {
 
 using static Properties.OperationPropertiesModule;
+using static PropertyModule;
 
 public static class FunctorLaws
 {
-    public static Test For<FA, A>
+    public static Invariant For<FA, A>
       ( Func<Func<A, A>, Func<FA, FA>> map
       , Func<FA, FA, bool> eq
       , Arbitrary<FA> arbFA
@@ -17,7 +17,7 @@ public static class FunctorLaws
       )
     =>
         "Functor Laws"
-        .Group
+        .All
           ( HasMapIdentity(map, eq, arbFA)
           , MapDistributesOverComposition(map, eq, arbFA, arbAA)
           );

@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Collections.Immutable;
 using Microsoft.FSharp.Collections;
 using FsCheck;
 using Fuchu;
@@ -40,7 +41,7 @@ public static class PropertyModule
       , Func<A, bool> f
       )
     =>
-        Invariant.Mk(FsProp.ForAll(arbA, f), label);
+        InvariantProperty(FsProp.ForAll(arbA, f), label);
 
     public static Invariant ForAll<A>
       ( this string label
@@ -48,7 +49,7 @@ public static class PropertyModule
       , Func<A, Property> f
       )
     =>
-        Invariant.Mk(FsProp.ForAll(arbA, f), label);
+        InvariantProperty(FsProp.ForAll(arbA, f), label);
 
     public static Invariant ForAll<A, B>
       ( this string label
@@ -57,7 +58,7 @@ public static class PropertyModule
       , Func<A, B, bool> f
       )
     =>
-        Invariant.Mk(FsProp.ForAll(arbA, arbB, f), label);
+        InvariantProperty(FsProp.ForAll(arbA, arbB, f), label);
 
     public static Invariant ForAll<A, B>
       ( this string label
@@ -66,7 +67,7 @@ public static class PropertyModule
       , Func<A, B, Property> f
       )
     =>
-        Invariant.Mk(FsProp.ForAll(arbA, arbB, f), label);
+        InvariantProperty(FsProp.ForAll(arbA, arbB, f), label);
 
     public static Invariant ForAll<A, B, C>
       ( this string label
@@ -76,7 +77,7 @@ public static class PropertyModule
       , Func<A, B, C, bool> f
       )
     =>
-        Invariant.Mk(FsProp.ForAll(arbA, arbB, arbC, f), label);
+        InvariantProperty(FsProp.ForAll(arbA, arbB, arbC, f), label);
 
     public static Invariant ForAll<A, B, C>
       ( this string label
@@ -86,7 +87,7 @@ public static class PropertyModule
       , Func<A, B, C, Property> f
       )
     =>
-        Invariant.Mk(FsProp.ForAll(arbA, arbB, arbC, f), label);
+        InvariantProperty(FsProp.ForAll(arbA, arbB, arbC, f), label);
 
     public static Invariant ForAll<A, B, C, D>
       ( this string label
@@ -97,7 +98,7 @@ public static class PropertyModule
       , Func<A, B, C, D, bool> f
       )
     =>
-        Invariant.Mk
+        InvariantProperty
           ( FsProp.ForAll
               ( arbD
               , d => FsProp.ForAll(arbA, arbB, arbC, (a, b, c) => f(a, b, c, d))
@@ -114,7 +115,7 @@ public static class PropertyModule
       , Func<A, B, C, D, Property> f
       )
     =>
-        Invariant.Mk
+        InvariantProperty
           ( FsProp.ForAll
               ( arbD
               , d => FsProp.ForAll(arbA, arbB, arbC, (a, b, c) => f(a, b, c, d))
@@ -122,41 +123,77 @@ public static class PropertyModule
           , label
           );
 
-    public static Invariant All(this string label, params Property[] tests)
+    public static Invariant All(this string label, params Invariant[] tests)
     =>
-        Invariant.Mk(tests.Aggregate(PropertyExtensions.And), label);
+        Invariants.Mk(tests.ToImmutableList(), label);
 
-    public static Test Group(this string label, params Test[] tests)
+    public static Test All(this string label, params Test[] tests)
+    =>  Test.List(label, tests); 
+
+    public static Invariant InvariantProperty(Property p, string label)
     =>
-        Test.List(label, tests);
-}
+        new Invariant1(p, label);
 
-public sealed class Invariant
-{
-    public Property Property { get; }
-    public string Label { get; }
-
-    private Invariant(Property p, string l)
+    public abstract class Invariant
     {
-        Property = p;
-        Label = l;
+        internal Invariant()
+        {
+        }
+
+        public abstract string Label { get; }
+        public abstract Property Property { get; }
+        public abstract Test Test { get; }
+
+        public static implicit operator Test(Invariant p)
+        =>
+            p.Test;
+
+        public static implicit operator Property(Invariant p)
+        =>
+            p.Property.Label(p.Label);
     }
 
-    public static Invariant Mk(Property p, string label)
-    =>
-        new Invariant(p, label);
+    private sealed class Invariant1
+      : Invariant
+    {
+        internal Invariant1(Property p, string l)
+        {
+            Label = l;
+            Property = p;
+        }
 
-    public Test Test
-    =>
-        FuchuFsCheckModule.testProperty<Property>(Label).Invoke(Property);
+        public override string Label { get; }
+        public override Property Property { get; }
 
-    public static implicit operator Test(Invariant p)
-    =>
-        p.Test;
+        public override Test Test
+        =>
+            FuchuFsCheckModule.testProperty<Property>(Label).Invoke(Property);
+    }
 
-    public static implicit operator Property(Invariant p)
-    =>
-        p.Property.Label(p.Label);
+    private sealed class Invariants
+      : Invariant
+    {
+        internal Invariants(IImmutableList<Invariant> children, string l)
+        {
+            Children = children;
+            Label = l;
+        }
+
+        public IImmutableList<Invariant> Children { get; }
+        public override string Label { get; }
+
+        public static Invariants Mk(IImmutableList<Invariant> children, string label)
+        =>
+            new Invariants(children, label);
+
+        public override Property Property
+        =>
+            Children.Select(i => i.Property).Aggregate(PropertyExtensions.And).Label(Label);
+
+        public override Test Test
+        =>
+            Test.List(Label, Children.Select(c => c.Test).ToArray());
+    }
 }
 
 }

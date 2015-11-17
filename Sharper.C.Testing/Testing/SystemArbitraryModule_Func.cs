@@ -39,9 +39,9 @@ public static partial class SystemArbitraryModule
       , int cacheSize
       )
     =>
-        from bs in
-            Gen
-            .Sequence(Enumerable.Repeat(genB, cacheSize))
+        from bs in Sequence(Forever(genB))
+            // Gen
+            // .Sequence(Enumerable.Repeat(genB, cacheSize))
             .Select(e => e.GetEnumerator())
         from cache in
             Gen

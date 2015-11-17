@@ -24,14 +24,14 @@ function RestoreCmd() {
 }
 
 function InstallCmd() {
-    nuget sources add -Name Sharper.C -Source $env:SHARPER_C_FEED
+    # nuget sources add -Name Sharper.C -Source $env:SHARPER_C_FEED
     dnvm install latest
     dnu restore
 }
 
 function BuildCmd() {
-    $env:DNX_BUILD_VERSION =
-        'build-{0}' -f ($env:APPVEYOR_BUILD_NUMBER.PadLeft(5, '0'))
+    $env:DNX_BUILD_VERSION = 'z'
+    #    'build-{0}' -f ($env:APPVEYOR_BUILD_NUMBER.PadLeft(5, '0'))
     dnu pack --configuration Release (PackageProjects)
 }
 
@@ -42,9 +42,7 @@ function TestCmd() {
 }
 
 function RegisterCmd() {
-    PackageProjects | %{
-        Get-ChildItem -Recurse *.nupkg | %{dnu packages add $_}
-    }
+    Get-ChildItem -Recurse *.nupkg | %{dnu packages add $_}
 }
 
 function RunCommand($name) {
@@ -55,6 +53,7 @@ function RunCommand($name) {
         build {BuildCmd}
         test {TestCmd}
         register {RegisterCmd}
+        all {CleanCmd; RestoreCmd; BuildCmd; RegisterCmd}
     }
 }
 

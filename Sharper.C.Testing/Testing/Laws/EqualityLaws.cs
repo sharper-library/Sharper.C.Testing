@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using FsCheck;
-using Fuchu;
 
 namespace Sharper.C.Testing.Laws
 {
@@ -11,20 +10,20 @@ using static Properties.RelationPropertiesModule;
 
 public static class EqualityLaws
 {
-    public static Test For<A>
+    public static Invariant For<A>
       ( Func<A, A, bool> eq
       , Arbitrary<A> arbA
       )
     =>
         "Equality Laws"
-        .Group(IsEquivalence(eq, arbA));
+        .All(IsEquivalence(eq, arbA));
 
-    public static Test For<A>(Arbitrary<A> arbA)
+    public static Invariant For<A>(Arbitrary<A> arbA)
       where A : IEquatable<A>
     =>
         For((x, y) => x.Equals(y), arbA);
 
-    public static Test For<A>
+    public static Invariant For<A>
       ( IEqualityComparer<A> comparer
       , Arbitrary<A> arbA
       )

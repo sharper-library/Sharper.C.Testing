@@ -3,7 +3,7 @@
   "version": 1,
   "targets": {
     "DNX,Version=v4.5.1": {
-      "FsCheck/2.2.1": {
+      "FsCheck/2.2.4": {
         "type": "package",
         "dependencies": {
           "FSharp.Core": "3.1.2.5"
@@ -15,7 +15,7 @@
           "lib/net45/FsCheck.dll": {}
         }
       },
-      "FSharp.Core/4.0.0.1": {
+      "FSharp.Core/3.1.2.5": {
         "type": "package",
         "compile": {
           "lib/net40/FSharp.Core.dll": {}
@@ -24,7 +24,7 @@
           "lib/net40/FSharp.Core.dll": {}
         }
       },
-      "Fuchu/1.0.1.0": {
+      "Fuchu/1.0.3": {
         "type": "package",
         "dependencies": {
           "FSharp.Core": "3.1.2.1"
@@ -36,12 +36,12 @@
           "lib/Fuchu.dll": {}
         }
       },
-      "Fuchu.FsCheck/1.0.1.0": {
+      "Fuchu.FsCheck/1.0.3": {
         "type": "package",
         "dependencies": {
-          "FsCheck": "2.1.0",
+          "FsCheck": "2.2.4",
           "FSharp.Core": "3.1.2.5",
-          "Fuchu": "1.0.1.0"
+          "Fuchu": "1.0.3"
         },
         "compile": {
           "lib/Fuchu.FsCheck.dll": {}
@@ -49,20 +49,29 @@
         "runtime": {
           "lib/Fuchu.FsCheck.dll": {}
         }
+      },
+      "System.Collections.Immutable/1.1.38-beta-23516": {
+        "type": "package",
+        "compile": {
+          "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll": {}
+        },
+        "runtime": {
+          "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll": {}
+        }
       }
     }
   },
   "libraries": {
-    "FsCheck/2.2.1": {
+    "FsCheck/2.2.4": {
       "type": "package",
-      "sha512": "dG3gFk84ory765oRhEzF5FLdrHfl0gqX3C3XnggIR74JeWtWffZcaBwObdkfMR3SFL4++FelPsyzTM5Cz8Pm0w==",
+      "sha512": "FF+XVwzwn0xKPXG4zXkxks/3ZNBSQ6eenyo9jPwaSj84Qr7flKXLGd1SpDTALay7FzmovuqQxbrCGs+HD0sGwg==",
       "files": [
-        "FsCheck.2.2.1.nupkg",
-        "FsCheck.2.2.1.nupkg.sha512",
+        "FsCheck.2.2.4.nupkg",
+        "FsCheck.2.2.4.nupkg.sha512",
         "FsCheck.nuspec",
         "lib/net45/FsCheck.dll",
         "lib/net45/FsCheck.pdb",
-        "lib/net45/FsCheck.XML",
+        "lib/net45/FsCheck.xml",
         "lib/portable-net45+netcore45/FsCheck.dll",
         "lib/portable-net45+netcore45/FsCheck.pdb",
         "lib/portable-net45+netcore45/FsCheck.XML",
@@ -74,12 +83,12 @@
         "lib/portable-net45+netcore45+wpa81+wp8/FsCheck.XML"
       ]
     },
-    "FSharp.Core/4.0.0.1": {
+    "FSharp.Core/3.1.2.5": {
       "type": "package",
-      "sha512": "lNtlbbJ5hP8LEd7nKtTUiGEpLmHLWiU39x+0jq4rmRWG7Mgj6vYm+gmTOhtwpiPFX8j8zUsfLyA8AC7dZY75LQ==",
+      "sha512": "1V9wPWZuLgewzk01tc5wRyGrmdOI+Lc9/MsAeMXFffjjGA1Ydv5KU2mnWLz+O6TcHeACwK0M3yHbb/we233vvg==",
       "files": [
-        "FSharp.Core.4.0.0.1.nupkg",
-        "FSharp.Core.4.0.0.1.nupkg.sha512",
+        "FSharp.Core.3.1.2.5.nupkg",
+        "FSharp.Core.3.1.2.5.nupkg.sha512",
         "FSharp.Core.nuspec",
         "lib/net20/FSharp.Core.dll",
         "lib/net20/FSharp.Core.optdata",
@@ -111,37 +120,53 @@
         "lib/portable-net45+sl5+netcore45/FSharp.Core.xml"
       ]
     },
-    "Fuchu/1.0.1.0": {
+    "Fuchu/1.0.3": {
       "type": "package",
-      "sha512": "pqd44uYepdFUI23/GaBY5jC0YXEB1m8CquyE5xTLFVbmbph9R9Dxo1RpqqS4iyOe30CAcRQSqa5yNoVQyCBmNg==",
+      "sha512": "Ux3gNTOFyJloKwe7jfgq3H2+nbryBJmgWI5E6JrFThVzh3mnrPhoNo56qTCeoyzIcSqKCx3zvChMs8YK2JgKYA==",
       "files": [
-        "Fuchu.1.0.1.nupkg",
-        "Fuchu.1.0.1.nupkg.sha512",
+        "Fuchu.1.0.3.nupkg",
+        "Fuchu.1.0.3.nupkg.sha512",
         "Fuchu.nuspec",
         "lib/Fuchu.dll",
         "lib/Fuchu.pdb",
         "lib/Fuchu.XML"
       ]
     },
-    "Fuchu.FsCheck/1.0.1.0": {
+    "Fuchu.FsCheck/1.0.3": {
       "type": "package",
-      "sha512": "AqygEFPionZHsuqec/s4c44FSC4AFNRtr92ZYKn+FuuBXvmVV/blj/tnF2ZYOObGieuUcd2ermqw6vXRd3Ec0w==",
+      "sha512": "4GY/cNwNyMeuvzGqEBeIHXBHsCZ0h1BcQgh6qpvamnjfDTJjoqL/7wPPWjbRPnIfVtgQ7acPnVHGcQjMQ5kFZw==",
       "files": [
-        "Fuchu.FsCheck.1.0.1.nupkg",
-        "Fuchu.FsCheck.1.0.1.nupkg.sha512",
+        "Fuchu.FsCheck.1.0.3.nupkg",
+        "Fuchu.FsCheck.1.0.3.nupkg.sha512",
         "Fuchu.FsCheck.nuspec",
         "lib/Fuchu.FsCheck.dll",
         "lib/Fuchu.FsCheck.pdb",
         "lib/Fuchu.FsCheck.XML"
       ]
+    },
+    "System.Collections.Immutable/1.1.38-beta-23516": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "flV1yepTxfX6nUnJex2kSUeYc/kgVBb7AsZQRpQbSjd3/xdFkS5rKm+bObHb/AjKLNtDY3emoNH8fNvwqrZX+w==",
+      "files": [
+        "lib/dotnet5.1/System.Collections.Immutable.dll",
+        "lib/dotnet5.1/System.Collections.Immutable.xml",
+        "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.dll",
+        "lib/portable-net45+win8+wp8+wpa81/System.Collections.Immutable.xml",
+        "System.Collections.Immutable.1.1.38-beta-23516.nupkg",
+        "System.Collections.Immutable.1.1.38-beta-23516.nupkg.sha512",
+        "System.Collections.Immutable.nuspec"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "": [
-      "FsCheck >= 2.2.1",
-      "Fuchu.FsCheck >= 1.0.1",
-      "FSharp.Core >= 4.0.0.1"
+      "Fuchu.FsCheck >= 1.0.3",
+      "System.Collections.Immutable >= 1.1.38-beta-23516"
     ],
-    "DNX,Version=v4.5.1": []
+    "DNX,Version=v4.5.1": [
+      "fx/System.Runtime >= 4.0.10.0",
+      "fx/System.Collections >= 4.0.0.0"
+    ]
   }
 }

@@ -1,6 +1,5 @@
 using System;
 using FsCheck;
-using Fuchu;
 
 namespace Sharper.C.Testing.Laws
 {
@@ -10,7 +9,7 @@ using static Properties.OperationPropertiesModule;
 
 public static class MonadLaws
 {
-    public static Test For<MA, A>
+    public static Invariant For<MA, A>
       ( Func<A, MA> pure
       , Func<Func<A, A>, Func<MA, MA>> map
       , Func<Func<A, MA>, Func<MA, MA>> flatMap
@@ -25,7 +24,7 @@ public static class MonadLaws
             (f, g) => a => flatMap(g)(f(a));
         return
             "Monad Laws"
-            .Group
+            .All
               ( KleisliLeftIdentity(pure, kleisli, eq, arbAMA, arbA)
               , KleisliRightIdentity(pure, kleisli, eq, arbAMA, arbA)
               , KleisliIsAssociative(kleisli, eq, arbAMA, arbA)
