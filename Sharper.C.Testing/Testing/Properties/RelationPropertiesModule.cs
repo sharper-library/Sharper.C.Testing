@@ -1,6 +1,5 @@
 using System;
 using FsCheck;
-using Fuchu;
 
 namespace Sharper.C.Testing.Properties
 {

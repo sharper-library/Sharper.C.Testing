@@ -1,14 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Collections.Immutable;
 using Microsoft.FSharp.Collections;
 using FsCheck;
-using Fuchu;
+using StdGen = FsCheck.Random.StdGen;
+using Microsoft.FSharp.Core;
+using FsProp = FsCheck.Prop;
 
 namespace Sharper.C.Testing
 {
-
-using FsProp = Prop;
 
 public static class PropertyModule
 {
@@ -35,104 +36,38 @@ public static class PropertyModule
               )
           );
 
-    public static Invariant ForAll<A>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Func<A, bool> f
-      )
-    =>
-        InvariantProperty(FsProp.ForAll(arbA, f), label);
-
-    public static Invariant ForAll<A>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Func<A, Property> f
-      )
-    =>
-        InvariantProperty(FsProp.ForAll(arbA, f), label);
-
-    public static Invariant ForAll<A, B>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Arbitrary<B> arbB
-      , Func<A, B, bool> f
-      )
-    =>
-        InvariantProperty(FsProp.ForAll(arbA, arbB, f), label);
-
-    public static Invariant ForAll<A, B>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Arbitrary<B> arbB
-      , Func<A, B, Property> f
-      )
-    =>
-        InvariantProperty(FsProp.ForAll(arbA, arbB, f), label);
-
-    public static Invariant ForAll<A, B, C>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Arbitrary<B> arbB
-      , Arbitrary<C> arbC
-      , Func<A, B, C, bool> f
-      )
-    =>
-        InvariantProperty(FsProp.ForAll(arbA, arbB, arbC, f), label);
-
-    public static Invariant ForAll<A, B, C>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Arbitrary<B> arbB
-      , Arbitrary<C> arbC
-      , Func<A, B, C, Property> f
-      )
-    =>
-        InvariantProperty(FsProp.ForAll(arbA, arbB, arbC, f), label);
-
-    public static Invariant ForAll<A, B, C, D>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Arbitrary<B> arbB
-      , Arbitrary<C> arbC
-      , Arbitrary<D> arbD
-      , Func<A, B, C, D, bool> f
-      )
-    =>
-        InvariantProperty
-          ( FsProp.ForAll
-              ( arbD
-              , d => FsProp.ForAll(arbA, arbB, arbC, (a, b, c) => f(a, b, c, d))
-              )
-          , label
-          );
-
-    public static Invariant ForAll<A, B, C, D>
-      ( this string label
-      , Arbitrary<A> arbA
-      , Arbitrary<B> arbB
-      , Arbitrary<C> arbC
-      , Arbitrary<D> arbD
-      , Func<A, B, C, D, Property> f
-      )
-    =>
-        InvariantProperty
-          ( FsProp.ForAll
-              ( arbD
-              , d => FsProp.ForAll(arbA, arbB, arbC, (a, b, c) => f(a, b, c, d))
-              )
-          , label
-          );
+    public static Invariant Wrap(this string label, Invariant inv)
+    =>  Invariants.Mk(ImmutableList.Create(inv), label);
 
     public static Invariant All(this string label, params Invariant[] tests)
     =>
         Invariants.Mk(tests.ToImmutableList(), label);
 
-    public static Test All(this string label, params Test[] tests)
-    =>  Test.List(label, tests); 
+    public static StdGen MkStdGen(int a, int b)
+    =>  StdGen.NewStdGen(a, b);
 
-    public static Invariant InvariantProperty(Property p, string label)
-    =>
-        new Invariant1(p, label);
+    public delegate InvariantConfig ConfigF(InvariantRunner runner);
+
+    public struct Testable
+    {
+        private Testable(Property p)
+        {   Prop = p;
+        }
+
+        public Property Prop { get; }
+
+        public static implicit operator Testable(Property p)
+        =>  new Testable(p);
+
+        public static implicit operator Testable(bool b)
+        =>  new Testable(b.ToProperty());
+
+        public static implicit operator Testable(Action a)
+        =>  new Testable(a.ToProperty());
+
+        public static implicit operator Testable(Invariant i)
+        =>  new Testable(i.LabeledProperty);
+    }
 
     public abstract class Invariant
     {
@@ -142,21 +77,83 @@ public static class PropertyModule
 
         public abstract string Label { get; }
         public abstract Property Property { get; }
-        public abstract Test Test { get; }
 
-        public static implicit operator Test(Invariant p)
-        =>
-            p.Test;
+        public Property LabeledProperty
+        =>  Property.Label(Label);
+
+        public A Match<A>
+          ( Func<Property, string, A> inv1
+          , Func<IImmutableList<Invariant>, string, A> invs
+          )
+        =>  this is Invariant1
+            ? inv1
+                ( Property
+                , Label
+                )
+            : invs(((Invariants)this).Children, Label);
+
+        public IEnumerable<InvariantResult> Results(ConfigF config = null)
+        {   var runner = InvariantRunner.Mk();
+            var conf = (config ?? DefaultConfigF)(runner);
+            foreach (var i in Linearize())
+            {   i.Check(conf);
+            }
+            return runner.Results;
+        }
+
+        public IEnumerable<InvariantResult> Failures(ConfigF config = null)
+        =>  Results(config).Where(r => r.Failed);
+
+        public bool Passes()
+        {   var runner = InvariantRunner.Mk();
+            LabeledProperty.Check(new Configuration { Runner = runner });
+            return runner.Results.All(r => r.Passed);
+        }
+
+        public bool Fails()
+        => !Passes();
+
+        public bool Check(ConfigF config = null)
+        =>  !Failures(config).Any();
+
+        public void CheckThrow(ConfigF config = null)
+        {   var xs = Failures(config).ToImmutableList();
+            if (xs.Any())
+            {   throw new Exception
+                  ( string.Join("\n", xs.Select(f => f.Message))
+                  );
+            }
+        }
 
         public static implicit operator Property(Invariant p)
         =>
-            p.Property.Label(p.Label);
+            p.LabeledProperty;
+
+        public IEnumerable<Invariant> AsSeq()
+        =>  Linearize().Cast<Invariant>();
+
+        private IEnumerable<Invariant1> Linearize()
+        =>  Linearize(ImmutableList.Create<string>());
+
+        private IEnumerable<Invariant1> Linearize
+          ( IImmutableList<string> prefix
+          )
+        =>  Match
+              ( (p, l) =>
+                    new[]
+                    { new Invariant1(p, string.Join("/", prefix.Add(l)))
+                    }
+              , (xs, _) => xs.SelectMany(x => x.Linearize(prefix.Add(Label)))
+              );
     }
 
     private sealed class Invariant1
       : Invariant
     {
-        internal Invariant1(Property p, string l)
+        internal Invariant1
+          ( Property p
+          , string l
+          )
         {
             Label = l;
             Property = p;
@@ -165,35 +162,126 @@ public static class PropertyModule
         public override string Label { get; }
         public override Property Property { get; }
 
-        public override Test Test
-        =>
-            FuchuFsCheckModule.testProperty<Property>(Label).Invoke(Property);
+        public void Check(Configuration config)
+        =>  LabeledProperty.Check(config);
     }
 
     private sealed class Invariants
       : Invariant
     {
         internal Invariants(IImmutableList<Invariant> children, string l)
-        {
-            Children = children;
+        {   Children = children;
             Label = l;
         }
 
         public IImmutableList<Invariant> Children { get; }
+
         public override string Label { get; }
 
-        public static Invariants Mk(IImmutableList<Invariant> children, string label)
-        =>
-            new Invariants(children, label);
+        public static Invariants Mk
+          ( IImmutableList<Invariant> children
+          , string label
+          )
+        =>  new Invariants(children, label);
 
         public override Property Property
-        =>
-            Children.Select(i => i.Property).Aggregate(PropertyExtensions.And).Label(Label);
-
-        public override Test Test
-        =>
-            Test.List(Label, Children.Select(c => c.Test).ToArray());
+        =>  Children
+            .Select(i => i.LabeledProperty)
+            .Aggregate(PropertyExtensions.And)
+            .Label(Label);
     }
+
+    public struct InvariantResult
+    {
+        public string Label { get; }
+
+        private TestResult Result { get; }
+
+        private InvariantResult(string label, TestResult result)
+        {   Label = label;
+            Result = result;
+        }
+
+        public string Message
+        =>  Runner.onFinishedToString(Label, Result);
+
+        public bool Passed
+        =>  Result.IsTrue;
+
+        public bool Failed
+        =>  !Passed;
+
+        public bool Exhausted
+        =>  Result.IsExhausted;
+
+        public static InvariantResult Mk
+          ( string label
+          , TestResult result
+          )
+        =>  new InvariantResult(label, result);
+    }
+
+    public struct InvariantRunner
+      : IRunner
+    {
+        private readonly List<InvariantResult> results;
+
+        private InvariantRunner(List<InvariantResult> results)
+        {   this.results = results;
+        }
+
+        public static InvariantRunner Mk()
+        =>  new InvariantRunner(new List<InvariantResult>());
+
+        public IEnumerable<InvariantResult> Results
+        =>  results;
+
+        public void OnArguments
+          ( int ntest
+          , FSharpList<object> args
+          , FSharpFunc<int, FSharpFunc<FSharpList<object>, string>> every
+          )
+        =>  Runner.consoleRunner.OnArguments(ntest, args, every);
+
+        public void OnFinished(string name, TestResult result)
+        =>  results.Add(InvariantResult.Mk(name, result));
+
+        public void OnShrink
+          ( FSharpList<object> args
+          , FSharpFunc<FSharpList<object>, string> everyShrink
+          )
+        =>  Runner.consoleRunner.OnShrink(args, everyShrink);
+
+        public void OnStartFixture(Type t)
+        =>  Runner.consoleRunner.OnStartFixture(t);
+    }
+
+    public sealed class InvariantConfig
+      : Configuration
+    {
+        public new InvariantRunner Runner
+        {
+            get { return (InvariantRunner) base.Runner; }
+            set { base.Runner = value; }
+        }
+    }
+
+    internal static Invariant InvariantProperty(Property p, string label)
+    =>  new Invariant1(p, label);
+
+    private static Configuration Config
+      ( IRunner runner
+      , int? maxTests = null
+      , StdGen replay = null
+      )
+    =>  new Configuration
+        { Runner = runner
+        , Replay = replay
+        , MaxNbOfTest = maxTests ?? FsCheck.Config.Default.MaxTest
+        };
+
+    private static InvariantConfig DefaultConfigF(InvariantRunner r)
+    =>  new InvariantConfig { Runner = r };
 }
 
 }

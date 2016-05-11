@@ -1,13 +1,12 @@
 { "version": "0.1.0-dev"
-, "description": "Properties and Arbitrary instances"
+, "description": "Xunit discovery"
 , "authors": [ "Jeremy Hughes" ]
 , "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing"
 , "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt"
 
 , "dependencies":
-  { "FsCheck": "2.4.0"
-  , "System.Collections.Immutable": "1.1.38-beta-23516"
-  , "FSharp.Core": "4.0.0.1"
+  { "Sharper.C.Testing": ""
+  , "xunit": "2.1.0"
   }
 
 , "frameworks":
@@ -15,6 +14,8 @@
     { "frameworkAssemblies":
       { "System.Runtime": "4.0.10.0"
       , "System.Collections": "4.0.0.0"
+      , "System.Threading.Tasks": "4.0.0.0"
+      , "System.Reflection": "4.0.0.0"
       }
     }
   }

@@ -1,19 +1,19 @@
 ﻿using System;
-using Fuchu;
+using static Sharper.C.Testing.PropertyModule;
 
 namespace Sharper.C.Testing.Properties
 {
 
 public static class RuntimePropertiesModule
 {
-    public static Test WithoutOverflow<A>
+    public static Invariant WithoutOverflow<A>
       ( this string label
       , Func<A> build
       , Action<A> run
       )
     =>  label.All
-          ( Test.Case("Build", () => build())
-          , Test.Case("Evaluate", () => run(build()))
+          ( "Build".ForUnit(() => new Action(() => build()))
+          , "Evaluate".ForUnit(() => new Action(() => run(build())))
           );
 }
 
