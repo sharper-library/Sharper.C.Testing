@@ -1,27 +1,27 @@
 {
-  "version": "0.1.0-*",
-  "description": "Properties and Arbitrary instances (Tests)",
-  "authors": [
-    "Jeremy Hughes"
-  ],
-  "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing",
-  "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt",
-  "commands": {
-    "test": "xunit.runner.dnx"
-  },
-  "dependencies": {
-    "Sharper.C.Testing": "",
-    "Sharper.C.Testing.Xunit": "",
-    "xunit": "2.1.0",
-    "xunit.runner.dnx": "2.1.0-rc1-build204",
-    "FSharp.Core": "4.0.0.1"
-  },
-  "frameworks": {
-    "dnx451": {
-      "frameworkAssemblies": {
-        "System.Runtime": "4.0.10.0",
-        "System.Collections": "4.0.0.0"
-      }
+    "version": "0.1.0-*",
+    "description": "Properties and Arbitrary instances (Tests)",
+    "authors": [
+        "Jeremy Hughes"
+    ],
+    "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing",
+    "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt",
+    "commands": {
+        "test": "xunit.runner.dnx"
+    },
+    "dependencies": {
+        "Sharper.C.Testing": "",
+        "Sharper.C.Testing.Xunit": "",
+        "xunit": "2.1.0",
+        "xunit.runner.dnx": "2.1.0-rc1-build204",
+        "FSharp.Core": "4.0.0.1"
+    },
+    "frameworks": {
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Runtime": "4.0.10.0",
+                "System.Collections": "4.0.0.0"
+            }
+        }
     }
-  }
 }

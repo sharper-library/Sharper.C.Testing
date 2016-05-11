@@ -1,21 +1,22 @@
-{ "version": "0.1.0-*"
-, "description": "Properties and Arbitrary instances"
-, "authors": [ "Jeremy Hughes" ]
-, "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing"
-, "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt"
-
-, "dependencies":
-  { "FsCheck": "2.4.0"
-  , "System.Collections.Immutable": "1.1.38-beta-23516"
-  , "FSharp.Core": "4.0.0.1"
-  }
-
-, "frameworks":
-  { "dnx451":
-    { "frameworkAssemblies":
-      { "System.Runtime": "4.0.10.0"
-      , "System.Collections": "4.0.0.0"
-      }
+{
+    "version": "0.1.0-*",
+    "description": "Properties and Arbitrary instances",
+    "authors": [
+        "Jeremy Hughes"
+    ],
+    "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing",
+    "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt",
+    "dependencies": {
+        "FsCheck": "2.4.0",
+        "System.Collections.Immutable": "1.1.38-beta-23516",
+        "FSharp.Core": "4.0.0.1"
+    },
+    "frameworks": {
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Runtime": "4.0.10.0",
+                "System.Collections": "4.0.0.0"
+            }
+        }
     }
-  }
 }
