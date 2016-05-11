@@ -8,33 +8,33 @@ using static PropertyModule;
 
 public static class FunctionPropertiesModule
 {
-    public static Invariant IsMonomorphism<A, B>
+    public static Invariant IsInjection<A, B>
       ( Func<A, B> f
       , Func<B, A> g
       , Func<A, A, bool> eq
       , Arbitrary<A> arbA
       )
     =>
-        "Monomorphism (injective homomorphism):  g . f  ==  id"
+        "Injection:  g . f  ==  id"
         .ForAll
           ( arbA
-          , a => eq(g(f(a)), a)
+          , a => eq(a, g(f(a)))
           );
 
-    public static Invariant IsEpimorphism<A, B>
+    public static Invariant IsSurjection<A, B>
       ( Func<A, B> f
       , Func<B, A> g
       , Func<B, B, bool> eq
       , Arbitrary<B> arbB
       )
     =>
-        "Eipmorphism (surjective homomorphism):  f . g  ==  id"
+        "Surjection:  f . g  ==  id"
         .ForAll
           ( arbB
           , b => eq(f(g(b)), b)
           );
 
-    public static Invariant IsIsomorphism<A, B>
+    public static Invariant IsBijection<A, B>
       ( Func<A, B> f
       , Func<B, A> g
       , Func<A, A, bool> eqA
@@ -43,10 +43,9 @@ public static class FunctionPropertiesModule
       , Arbitrary<B> arbB
       )
     =>
-        "Isomorphism (bijective homomorphism):  g . f  ==  id  ==  f . g"
-        .All
-          ( IsMonomorphism(f, g, eqA, arbA)
-          , IsEpimorphism(f, g, eqB, arbB)
+        "Bijection:  injective and surjective".All
+          ( IsInjection(f, g, eqA, arbA)
+          , IsSurjection(f, g, eqB, arbB)
           );
 
     public static Invariant IsBinaryRelationHomomorphism<A, B>
