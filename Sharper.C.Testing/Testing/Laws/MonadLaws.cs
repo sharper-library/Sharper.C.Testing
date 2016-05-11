@@ -4,7 +4,6 @@ using FsCheck;
 namespace Sharper.C.Testing.Laws
 {
 
-using static PropertyModule;
 using static Properties.OperationPropertiesModule;
 
 public static class MonadLaws

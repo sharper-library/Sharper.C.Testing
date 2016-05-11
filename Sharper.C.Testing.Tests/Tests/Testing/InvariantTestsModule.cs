@@ -4,7 +4,6 @@ using Xunit;
 using FsCheck;
 
 using Sharper.C.Testing.Xunit;
-using static Sharper.C.Testing.PropertyModule;
 using static Sharper.C.Testing.SystemArbitraryModule;
 
 namespace Sharper.C.Testing.Tests.Testing
@@ -80,7 +79,7 @@ namespace Sharper.C.Testing.Tests.Testing
 
         [Invariant(Replay = "1996231529,296153882")]
         public static Invariant Invariant_XunitDiscoverySmokeTest_Replay()
-        =>  "Replay smoke test".Wrap(Invariant_XunitDiscoverySmokeTest());
+        =>  "Replay smoke test".All(Invariant_XunitDiscoverySmokeTest());
 
         private static bool Throws(Action a)
         {   try

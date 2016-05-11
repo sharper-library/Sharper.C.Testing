@@ -8,8 +8,6 @@ using Xunit.Sdk;
 
 using StdGen = FsCheck.Random.StdGen;
 
-using static Sharper.C.Testing.PropertyModule;
-
 namespace Sharper.C.Testing.Xunit
 {
     public sealed class InvariantTestCase
@@ -34,7 +32,7 @@ namespace Sharper.C.Testing.Xunit
 
         private Invariant Inv { get; }
 
-        private ConfigF Config
+        private Func<InvariantRunner, InvariantConfig> Config
           ( TestOutputHelper output
           )
         {   var attr =

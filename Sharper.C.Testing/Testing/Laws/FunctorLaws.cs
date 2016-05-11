@@ -5,7 +5,6 @@ namespace Sharper.C.Testing.Laws
 {
 
 using static Properties.OperationPropertiesModule;
-using static PropertyModule;
 
 public static class FunctorLaws
 {

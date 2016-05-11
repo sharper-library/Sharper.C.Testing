@@ -4,8 +4,6 @@ using FsCheck;
 namespace Sharper.C.Testing.Properties
 {
 
-using static PropertyModule;
-
 public static class OperationPropertiesModule
 {
     public static Invariant IsAssociative<A>

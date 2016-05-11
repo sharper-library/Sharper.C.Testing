@@ -6,8 +6,6 @@ using Xunit.Sdk;
 
 using StdGen = FsCheck.Random.StdGen;
 
-using static Sharper.C.Testing.PropertyModule;
-
 namespace Sharper.C.Testing.Xunit
 {
     [AttributeUsage
@@ -35,7 +33,7 @@ namespace Sharper.C.Testing.Xunit
             get { return $"{StdGen.Item1},{StdGen.Item2}"; }
             set
             {   var x = value.Split(',').Select(int.Parse).ToList();
-                StdGen = MkStdGen(x[0], x[1]);
+                StdGen = StdGen.NewStdGen(x[0], x[1]);
             }
         }
     }

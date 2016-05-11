@@ -5,7 +5,6 @@ using FsCheck;
 namespace Sharper.C.Testing.Laws
 {
 
-using static PropertyModule;
 using static Properties.RelationPropertiesModule;
 
 public static class EqualityLaws

@@ -1,16 +1,22 @@
 using System;
+using System.Collections.Immutable;
 using FsCheck;
 using FsProp = FsCheck.Prop;
-using static Sharper.C.Testing.PropertyModule;
 
 namespace Sharper.C.Testing
 {
 
-public static class ArityModule
+public static class InvariantModule
 {
     public static Invariant ForUnit(this string label, Func<Testable> f)
-    =>  InvariantProperty
+    =>  Invariant.Single
           ( FsProp.ForAll(Arb.Default.Unit(), _ => f().Prop)
+          , label
+          );
+
+    public static Invariant All(this string label, params Invariant[] tests)
+    =>  Invariant.Multiple
+          ( tests.ToImmutableList()
           , label
           );
 
@@ -19,8 +25,7 @@ public static class ArityModule
       , Arbitrary<A> arbA
       , Func<A, Testable> f
       )
-    =>
-        InvariantProperty
+    =>  Invariant.Single
           ( FsProp.ForAll(arbA, a => f(a).Prop)
           , label
           );
@@ -31,8 +36,7 @@ public static class ArityModule
       , Arbitrary<B> arbB
       , Func<A, B, Testable> f
       )
-    =>
-        InvariantProperty
+    =>  Invariant.Single
           ( FsProp.ForAll(arbA, arbB, (a, b) => f(a, b).Prop)
           , label
           );
@@ -44,8 +48,7 @@ public static class ArityModule
       , Arbitrary<C> arbC
       , Func<A, B, C, Testable> f
       )
-    =>
-        InvariantProperty
+    =>  Invariant.Single
           ( FsProp.ForAll(arbA, arbB, arbC, (a, b, c) => f(a, b, c).Prop)
           , label
           );
@@ -58,8 +61,7 @@ public static class ArityModule
       , Arbitrary<D> arbD
       , Func<A, B, C, D, Testable> f
       )
-    =>
-        InvariantProperty
+    =>  Invariant.Single
           ( FsProp.ForAll
               ( arbD
               , d =>

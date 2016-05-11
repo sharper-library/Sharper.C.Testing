@@ -1,5 +1,4 @@
 ﻿using System;
-using static Sharper.C.Testing.PropertyModule;
 
 namespace Sharper.C.Testing.Properties
 {
