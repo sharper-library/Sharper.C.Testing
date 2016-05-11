@@ -39,10 +39,8 @@ public static partial class SystemArbitraryModule
       , int cacheSize
       )
     =>
-        from bs in Sequence(Forever(genB))
-            // Gen
-            // .Sequence(Enumerable.Repeat(genB, cacheSize))
-            .Select(e => e.GetEnumerator())
+        from bs in Gen.ListOf(cacheSize, genB)
+            .Select(e => e.AsEnumerable().GetEnumerator())
         from cache in
             Gen
             .Constant
@@ -62,26 +60,6 @@ public static partial class SystemArbitraryModule
                     }
                     return cache[a];
                 });
-
-    private static IEnumerable<A> Forever<A>(A a)
-    {
-        while (true)
-        {
-            yield return a;
-        }
-    }
-
-    // private static Gen<IEnumerable<A>> InfiniteGen<A>(Gen<A> genA)
-    // =>
-    //     genA.SelectMany(x => InfiniteGen(genA).Select(xs => new[] {x}.Concat(xs)));
-
-    private static Gen<IEnumerable<A>> Sequence<A>(IEnumerable<Gen<A>> genA)
-    =>
-        genA.Any()
-        ? from x in genA.First()
-          from xs in Sequence(genA.Skip(1))
-          select new[] {x}.Concat(xs)
-        : Gen.Constant(Enumerable.Empty<A>());
 }
 
 }
