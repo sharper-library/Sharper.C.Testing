@@ -75,6 +75,14 @@ namespace Sharper.C.Testing.Xunit
                 };
         }
 
+        protected override void Initialize()
+        {
+            base.Initialize();
+            if (Inv != null)
+            {   DisplayName = $"{DisplayName}: {Inv.Label}";
+            }
+        }
+
         public override async Task<RunSummary> RunAsync
           ( IMessageSink diagnosticMessageSink
           , IMessageBus bus
@@ -82,12 +90,8 @@ namespace Sharper.C.Testing.Xunit
           , ExceptionAggregator aggregator
           , CancellationTokenSource cancellationTokenSource
           )
-        {   var test = new XunitTest(this, DisplayName);
-            var output = new TestOutputHelper();
-            var timer = new ExecutionTimer();
-            var summary = new RunSummary();
-            output.Initialize(bus, test);
-            bus.QueueMessage(new TestStarting(test));
+        {   var summary = new RunSummary();
+            var test = new XunitTest(this, DisplayName);
             if (Inv == null)
             {   var msg = "Return Type must be Invariant.";
                 bus.QueueMessage
@@ -96,6 +100,10 @@ namespace Sharper.C.Testing.Xunit
                 summary.Aggregate(new RunSummary { Total = 1, Failed = 1 });
                 return summary;
             }
+            var output = new TestOutputHelper();
+            var timer = new ExecutionTimer();
+            output.Initialize(bus, test);
+            bus.QueueMessage(new TestStarting(test));
             InvariantResult result;
             timer.Aggregate(() => result = Inv.Results(Config(output)).First());
             var xresult = ToXunitResult(test, result, timer.Total);

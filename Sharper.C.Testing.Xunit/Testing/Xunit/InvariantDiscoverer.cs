@@ -27,7 +27,7 @@ namespace Sharper.C.Testing.Xunit
                 ? new[]
                   { new InvariantTestCase
                       ( MessageSink
-                      , discoveryOptions.MethodDisplayOrDefault()
+                      , TestMethodDisplay.Method
                       , testMethod
                       , null
                       )
@@ -36,7 +36,7 @@ namespace Sharper.C.Testing.Xunit
                     ( i =>
                           new InvariantTestCase
                             ( MessageSink
-                            , discoveryOptions.MethodDisplayOrDefault()
+                            , TestMethodDisplay.Method
                             , testMethod
                             , i
                             )
