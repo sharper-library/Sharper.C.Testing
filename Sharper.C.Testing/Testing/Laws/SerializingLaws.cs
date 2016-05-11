@@ -10,9 +10,9 @@ using static Properties.FunctionPropertiesModule;
 
 public static class SerializingLaws
 {
-    public static Invariant For<A>
-      ( Action<A, Stream> serialize
-      , Func<Stream, A> deserialize
+    public static Invariant For<A, S>
+      ( Func<A, S> serialize
+      , Func<S, A> deserialize
       , Func<A, int> hash
       , Func<A, A, bool> eq
       , Arbitrary<A> arbA
@@ -20,9 +20,9 @@ public static class SerializingLaws
     =>
         "Serializing Laws"
         .All
-          ( IsMonomorphism
-              ( SerializeFunc(serialize)
-              , DeserializeFunc(deserialize)
+          ( IsInjection
+              ( serialize
+              , deserialize
               , eq
               , arbA
               )
@@ -33,29 +33,31 @@ public static class SerializingLaws
       where A : IEquatable<A>
     =>
         For
-          ( (a, s) => new BinaryFormatter().Serialize(s, a)
-          , s => (A) new BinaryFormatter().Deserialize(s)
+          ( SerializeFunc<A>((a, s) => new BinaryFormatter().Serialize(s, a))
+          , DeserializeFunc(s => (A) new BinaryFormatter().Deserialize(s))
           , x => x.GetHashCode()
           , (x, y) => x.Equals(y)
           , arbA
           );
 
-    private static Func<A, Stream> SerializeFunc<A>(Action<A, Stream> serialize)
+    private static Func<A, byte[]> SerializeFunc<A>(Action<A, Stream> serialize)
     =>
         a =>
         {
-            var s = new MemoryStream();
-            serialize(a, s);
-            return s;
+            using (var s = new MemoryStream())
+            {
+                serialize(a, s);
+                return s.ToArray();
+            }
         };
 
-    private static Func<Stream, A> DeserializeFunc<A>
+    private static Func<byte[], A> DeserializeFunc<A>
       ( Func<Stream, A> deserialize
       )
     =>
-        s =>
+        bytes =>
         {
-            using (s)
+            using (var s = new MemoryStream(bytes))
             {
                 s.Seek(0, SeekOrigin.Begin);
                 return deserialize(s);
