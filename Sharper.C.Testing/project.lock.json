@@ -24,6 +24,21 @@
                     "lib/net40/FSharp.Core.dll": {}
                 }
             },
+            "Sharper.C.Eq/0.1.0-build-00006": {
+                "type": "package",
+                "frameworkAssemblies": [
+                    "Microsoft.CSharp",
+                    "mscorlib",
+                    "System",
+                    "System.Core"
+                ],
+                "compile": {
+                    "lib/dnx451/Sharper.C.Eq.dll": {}
+                },
+                "runtime": {
+                    "lib/dnx451/Sharper.C.Eq.dll": {}
+                }
+            },
             "System.Collections/4.0.0": {
                 "type": "package",
                 "compile": {
@@ -138,6 +153,21 @@
                     "lib/net40/FSharp.Core.dll": {}
                 }
             },
+            "Sharper.C.Eq/0.1.0-build-00006": {
+                "type": "package",
+                "frameworkAssemblies": [
+                    "Microsoft.CSharp",
+                    "mscorlib",
+                    "System",
+                    "System.Core"
+                ],
+                "compile": {
+                    "lib/dnx451/Sharper.C.Eq.dll": {}
+                },
+                "runtime": {
+                    "lib/dnx451/Sharper.C.Eq.dll": {}
+                }
+            },
             "System.Collections/4.0.0": {
                 "type": "package",
                 "compile": {
@@ -250,6 +280,21 @@
                 },
                 "runtime": {
                     "lib/net40/FSharp.Core.dll": {}
+                }
+            },
+            "Sharper.C.Eq/0.1.0-build-00006": {
+                "type": "package",
+                "frameworkAssemblies": [
+                    "Microsoft.CSharp",
+                    "mscorlib",
+                    "System",
+                    "System.Core"
+                ],
+                "compile": {
+                    "lib/dnx451/Sharper.C.Eq.dll": {}
+                },
+                "runtime": {
+                    "lib/dnx451/Sharper.C.Eq.dll": {}
                 }
             },
             "System.Collections/4.0.0": {
@@ -402,6 +447,21 @@
                 "lib/portable-net45+sl5+netcore45/FSharp.Core.optdata",
                 "lib/portable-net45+sl5+netcore45/FSharp.Core.sigdata",
                 "lib/portable-net45+sl5+netcore45/FSharp.Core.xml"
+            ]
+        },
+        "Sharper.C.Eq/0.1.0-build-00006": {
+            "type": "package",
+            "sha512": "7iaCI4EB+lCc5INiIb9vlCQIVyGNYjGoZ9hNbMNh0+sM/HtuetFX8pgHKO5bMadvxANoiqU5eW8f9R1DjQMk+A==",
+            "files": [
+                "lib/dnx451/Sharper.C.Eq.dll",
+                "lib/dnx451/Sharper.C.Eq.xml",
+                "lib/dotnet/Sharper.C.Eq.dll",
+                "lib/dotnet/Sharper.C.Eq.xml",
+                "lib/net451/Sharper.C.Eq.dll",
+                "lib/net451/Sharper.C.Eq.xml",
+                "Sharper.C.Eq.0.1.0-build-00006.nupkg",
+                "Sharper.C.Eq.0.1.0-build-00006.nupkg.sha512",
+                "Sharper.C.Eq.nuspec"
             ]
         },
         "System.Collections/4.0.0": {
@@ -778,7 +838,8 @@
         "": [
             "FsCheck >= 2.4.0",
             "System.Collections.Immutable >= 1.1.38-beta-23516",
-            "FSharp.Core >= 4.0.0.1"
+            "FSharp.Core >= 4.0.0.1",
+            "Sharper.C.Eq >= 0.1.0-*"
         ],
         "DNX,Version=v4.5.1": [
             "fx/System.Runtime >= 4.0.10",

@@ -9,7 +9,8 @@
     "dependencies": {
         "FsCheck": "2.4.0",
         "System.Collections.Immutable": "1.1.38-beta-23516",
-        "FSharp.Core": "4.0.0.1"
+        "FSharp.Core": "4.0.0.1",
+        "Sharper.C.Eq": "0.1.0-*"
     },
     "frameworks": {
         "dnx451": {
