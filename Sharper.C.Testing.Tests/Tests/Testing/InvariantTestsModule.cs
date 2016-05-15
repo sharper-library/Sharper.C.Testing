@@ -4,7 +4,7 @@ using Xunit;
 using FsCheck;
 
 using Sharper.C.Testing.Xunit;
-using static Sharper.C.Testing.SystemArbitraryModule;
+using static Sharper.C.Testing.Arbitraries.SystemArbitrariesModule;
 
 namespace Sharper.C.Testing.Tests.Testing
 {

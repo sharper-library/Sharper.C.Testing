@@ -1,10 +1,10 @@
 using System.Linq;
 using FsCheck;
 
-namespace Sharper.C.Testing
+namespace Sharper.C.Testing.Arbitraries
 {
 
-public static partial class SystemArbitraryModule
+public static partial class SystemArbitrariesModule
 {
     public static Arbitrary<string> AnyString
     =>

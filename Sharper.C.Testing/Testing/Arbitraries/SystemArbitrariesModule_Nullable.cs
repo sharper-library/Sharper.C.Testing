@@ -2,10 +2,10 @@ using System;
 using System.Linq;
 using FsCheck;
 
-namespace Sharper.C.Testing
+namespace Sharper.C.Testing.Arbitraries
 {
 
-public static partial class SystemArbitraryModule
+public static partial class SystemArbitrariesModule
 {
     /// <summary>
     /// Generate a Nullable[A] with an empty:full ration of 1:7.

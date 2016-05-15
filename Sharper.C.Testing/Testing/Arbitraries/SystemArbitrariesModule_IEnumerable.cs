@@ -3,10 +3,10 @@ using System.Linq;
 using Microsoft.FSharp.Collections;
 using FsCheck;
 
-namespace Sharper.C.Testing
+namespace Sharper.C.Testing.Arbitraries
 {
 
-public static partial class SystemArbitraryModule
+public static partial class SystemArbitrariesModule
 {
     public static Arbitrary<IEnumerable<A>> AnySeq<A>(Arbitrary<A> arbA)
     =>

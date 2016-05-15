@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FsCheck;
 
-namespace Sharper.C.Testing
+namespace Sharper.C.Testing.Arbitraries
 {
 
-public static partial class SystemArbitraryModule
+public static partial class SystemArbitrariesModule
 {
     public const int DefaultFunc1CacheSize = 1000;
 

@@ -8,7 +8,8 @@
     "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt",
     "dependencies": {
         "Sharper.C.Testing": "",
-        "xunit": "2.1.0"
+        "xunit": "2.1.0",
+        "Sharper.C.Product": "0.1.0-*"
     },
     "frameworks": {
         "dnx451": {

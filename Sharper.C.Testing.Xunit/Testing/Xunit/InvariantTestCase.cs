@@ -134,20 +134,20 @@ namespace Sharper.C.Testing.Xunit
             ir.Passed
             ? Tuple.Create
                 ( (IMessageSinkMessage)
-                  new TestPassed(test, time, null)
+                  new TestPassed(test, time, ir.Message)
                 , new RunSummary {  Total = 1, Time = time }
                 )
 
             : ir.Exhausted
             ? Tuple.Create
                 ( (IMessageSinkMessage)
-                  new TestFailed(test, time, null, new Exception("Exhaustion"))
+                  new TestPassed(test, time, ir.Message)
                 , new RunSummary { Total = 1, Failed = 1, Time = time }
                 )
 
             : Tuple.Create
                 ( (IMessageSinkMessage)
-                  new TestFailed(test, time, null, new Exception(ir.Message))
+                  new TestFailed(test, time, ir.Message, new Exception(ir.Message))
                 , new RunSummary { Total = 1, Failed = 1, Time = time }
                 );
     }
