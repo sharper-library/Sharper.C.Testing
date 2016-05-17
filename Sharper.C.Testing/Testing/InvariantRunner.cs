@@ -21,23 +21,23 @@ namespace Sharper.C.Testing
         public IEnumerable<InvariantResult> Results
         =>  results;
 
-        public void OnArguments
+        void IRunner.OnArguments
           ( int ntest
           , FSharpList<object> args
           , FSharpFunc<int, FSharpFunc<FSharpList<object>, string>> every
           )
         =>  every.Invoke(ntest).Invoke(args);
 
-        public void OnFinished(string name, TestResult result)
+        void IRunner.OnFinished(string name, TestResult result)
         =>  results.Add(InvariantResult.Mk(name, result));
 
-        public void OnShrink
+        void IRunner.OnShrink
           ( FSharpList<object> args
           , FSharpFunc<FSharpList<object>, string> everyShrink
           )
         =>  everyShrink.Invoke(args);
 
-        public void OnStartFixture(Type t)
+        void IRunner.OnStartFixture(Type t)
         =>  Runner.onStartFixtureToString(t);
     }
 }
