@@ -26,7 +26,7 @@ namespace Sharper.C.Testing
           , FSharpList<object> args
           , FSharpFunc<int, FSharpFunc<FSharpList<object>, string>> every
           )
-        =>  Runner.consoleRunner.OnArguments(ntest, args, every);
+        =>  Console.Write(every.Invoke(ntest).Invoke(args));
 
         public void OnFinished(string name, TestResult result)
         =>  results.Add(InvariantResult.Mk(name, result));
@@ -35,9 +35,9 @@ namespace Sharper.C.Testing
           ( FSharpList<object> args
           , FSharpFunc<FSharpList<object>, string> everyShrink
           )
-        =>  Runner.consoleRunner.OnShrink(args, everyShrink);
+        =>  Console.Write(everyShrink.Invoke(args));
 
         public void OnStartFixture(Type t)
-        =>  Runner.consoleRunner.OnStartFixture(t);
+        =>  Console.Write(Runner.onStartFixtureToString(t));
     }
 }
