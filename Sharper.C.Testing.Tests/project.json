@@ -1,6 +1,6 @@
 {
     "version": "0.1.0-*",
-    "description": "Properties and Arbitrary instances (Tests)",
+    "description": "A testing library (Tests)",
     "authors": [
         "Jeremy Hughes"
     ],

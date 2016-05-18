@@ -1,6 +1,6 @@
 {
     "version": "0.1.0-*",
-    "description": "Properties and Arbitrary instances",
+    "description": "A testing library",
     "authors": [
         "Jeremy Hughes"
     ],
@@ -8,9 +8,9 @@
     "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt",
     "dependencies": {
         "FsCheck": "2.4.0",
-        "System.Collections.Immutable": "1.1.38-beta-23516",
+        "System.Collections.Immutable": "1.2.0-rc2-24027",
         "FSharp.Core": "4.0.0.1",
-        "Sharper.C.Eq": "0.1.0-*"
+        "Sharper.C.Eq": "1.0"
     },
     "frameworks": {
         "dnx451": {
