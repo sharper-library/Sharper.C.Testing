@@ -24,7 +24,7 @@
                     "lib/net40/FSharp.Core.dll": {}
                 }
             },
-            "Sharper.C.Eq/0.1.0-build-00006": {
+            "Sharper.C.Eq/0.1.0-master-00002": {
                 "type": "package",
                 "frameworkAssemblies": [
                     "Microsoft.CSharp",
@@ -39,22 +39,7 @@
                     "lib/dnx451/Sharper.C.Eq.dll": {}
                 }
             },
-            "Sharper.C.Product/0.1.0-build-00002": {
-                "type": "package",
-                "frameworkAssemblies": [
-                    "Microsoft.CSharp",
-                    "mscorlib",
-                    "System",
-                    "System.Core"
-                ],
-                "compile": {
-                    "lib/dnx451/Sharper.C.Product.dll": {}
-                },
-                "runtime": {
-                    "lib/dnx451/Sharper.C.Product.dll": {}
-                }
-            },
-            "Sharper.C.Testing/0.1.0": {
+            "Sharper.C.Testing/0.1.0-z": {
                 "type": "project",
                 "framework": "DNX,Version=v4.5.1",
                 "dependencies": {
@@ -240,7 +225,7 @@
                     "lib/net40/FSharp.Core.dll": {}
                 }
             },
-            "Sharper.C.Eq/0.1.0-build-00006": {
+            "Sharper.C.Eq/0.1.0-master-00002": {
                 "type": "package",
                 "frameworkAssemblies": [
                     "Microsoft.CSharp",
@@ -255,22 +240,7 @@
                     "lib/dnx451/Sharper.C.Eq.dll": {}
                 }
             },
-            "Sharper.C.Product/0.1.0-build-00002": {
-                "type": "package",
-                "frameworkAssemblies": [
-                    "Microsoft.CSharp",
-                    "mscorlib",
-                    "System",
-                    "System.Core"
-                ],
-                "compile": {
-                    "lib/dnx451/Sharper.C.Product.dll": {}
-                },
-                "runtime": {
-                    "lib/dnx451/Sharper.C.Product.dll": {}
-                }
-            },
-            "Sharper.C.Testing/0.1.0": {
+            "Sharper.C.Testing/0.1.0-z": {
                 "type": "project",
                 "framework": "DNX,Version=v4.5.1",
                 "dependencies": {
@@ -456,7 +426,7 @@
                     "lib/net40/FSharp.Core.dll": {}
                 }
             },
-            "Sharper.C.Eq/0.1.0-build-00006": {
+            "Sharper.C.Eq/0.1.0-master-00002": {
                 "type": "package",
                 "frameworkAssemblies": [
                     "Microsoft.CSharp",
@@ -471,22 +441,7 @@
                     "lib/dnx451/Sharper.C.Eq.dll": {}
                 }
             },
-            "Sharper.C.Product/0.1.0-build-00002": {
-                "type": "package",
-                "frameworkAssemblies": [
-                    "Microsoft.CSharp",
-                    "mscorlib",
-                    "System",
-                    "System.Core"
-                ],
-                "compile": {
-                    "lib/dnx451/Sharper.C.Product.dll": {}
-                },
-                "runtime": {
-                    "lib/dnx451/Sharper.C.Product.dll": {}
-                }
-            },
-            "Sharper.C.Testing/0.1.0": {
+            "Sharper.C.Testing/0.1.0-z": {
                 "type": "project",
                 "framework": "DNX,Version=v4.5.1",
                 "dependencies": {
@@ -652,7 +607,7 @@
         }
     },
     "libraries": {
-        "Sharper.C.Testing/0.1.0": {
+        "Sharper.C.Testing/0.1.0-z": {
             "type": "project",
             "path": "../Sharper.C.Testing/project.json"
         },
@@ -714,9 +669,9 @@
                 "lib/portable-net45+sl5+netcore45/FSharp.Core.xml"
             ]
         },
-        "Sharper.C.Eq/0.1.0-build-00006": {
+        "Sharper.C.Eq/0.1.0-master-00002": {
             "type": "package",
-            "sha512": "7iaCI4EB+lCc5INiIb9vlCQIVyGNYjGoZ9hNbMNh0+sM/HtuetFX8pgHKO5bMadvxANoiqU5eW8f9R1DjQMk+A==",
+            "sha512": "uik67q13vEXE4VT1uFXnMhN05IU09fi2Pp9ziuklaSfbB60pIezgFgSS1vSmg3XuMF1WQkChE/PYD9SD90B9tw==",
             "files": [
                 "lib/dnx451/Sharper.C.Eq.dll",
                 "lib/dnx451/Sharper.C.Eq.xml",
@@ -724,24 +679,9 @@
                 "lib/dotnet/Sharper.C.Eq.xml",
                 "lib/net451/Sharper.C.Eq.dll",
                 "lib/net451/Sharper.C.Eq.xml",
-                "Sharper.C.Eq.0.1.0-build-00006.nupkg",
-                "Sharper.C.Eq.0.1.0-build-00006.nupkg.sha512",
+                "Sharper.C.Eq.0.1.0-master-00002.nupkg",
+                "Sharper.C.Eq.0.1.0-master-00002.nupkg.sha512",
                 "Sharper.C.Eq.nuspec"
-            ]
-        },
-        "Sharper.C.Product/0.1.0-build-00002": {
-            "type": "package",
-            "sha512": "+uaDD28PgVUU5QrulhMcxMUX98RbcJeKFB59xEU/1px3o3kiJ5VOIMg0VKfRWAuPuDYYjpjJnOMAq4eF56w0Iw==",
-            "files": [
-                "lib/dnx451/Sharper.C.Product.dll",
-                "lib/dnx451/Sharper.C.Product.xml",
-                "lib/dotnet/Sharper.C.Product.dll",
-                "lib/dotnet/Sharper.C.Product.xml",
-                "lib/net451/Sharper.C.Product.dll",
-                "lib/net451/Sharper.C.Product.xml",
-                "Sharper.C.Product.0.1.0-build-00002.nupkg",
-                "Sharper.C.Product.0.1.0-build-00002.nupkg.sha512",
-                "Sharper.C.Product.nuspec"
             ]
         },
         "System.Collections/4.0.0": {
@@ -1234,8 +1174,7 @@
     "projectFileDependencyGroups": {
         "": [
             "Sharper.C.Testing ",
-            "xunit >= 2.1.0",
-            "Sharper.C.Product >= 0.1.0-*"
+            "xunit >= 2.1.0"
         ],
         "DNX,Version=v4.5.1": [
             "fx/System.Runtime >= 4.0.10",
