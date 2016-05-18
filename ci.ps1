@@ -42,8 +42,10 @@ function BuildCmd() {
     else {
       $env:DNX_BUILD_VERSION = 'z'
     }
-    Write-Host "dnvm exec ci_build dnu pack --configuration Release $(PackageProjects)"
-    dnvm exec ci_build dnu pack --configuration Release (PackageProjects)
+    PackageProjects | %{
+      Write-Host "Building $_"
+      dnvm exec ci_build dnu pack --configuration Release $_.Directory
+    }
 }
 
 function TestCmd() {
