@@ -91,6 +91,12 @@ namespace Sharper.C.Testing.Tests.Testing
             }
         }
 
+        [Invariant]
+        public static Invariant Int_ObeysHashingLaws()
+        =>  "Int HashingLaws".All
+              ( Laws.HashingLaws.For(AnyInt)
+              );
+
         private static Invariant ConstantInvariant(bool pass)
         =>  $"Constant {pass}".ForAll(Arb.From(Gen.Constant(pass)), a => a);
 
