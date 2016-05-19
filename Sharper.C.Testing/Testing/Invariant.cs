@@ -30,7 +30,7 @@ namespace Sharper.C.Testing
               ( (p, l) => p.Label(l)
               , (xs, l) =>
                     xs
-                    .Select(x => (Property) x)
+                    .Select(x => x.LabeledProperty)
                     .Aggregate(PropertyExtensions.And)
                     .Label(l)
               );
@@ -46,32 +46,42 @@ namespace Sharper.C.Testing
                 )
             : invs(((MultipleCase)this).Children, Label);
 
-        public IEnumerable<InvariantResult> Results(ConfigF config = null)
-        {   var runner = InvariantRunner.Mk();
+        public IEnumerable<InvariantResult> Results
+          ( ConfigF config = null
+          , bool silent = false
+          )
+        {   var runner = InvariantRunner.Mk(silent);
             var conf = (config ?? InvariantConfig.Default)(runner);
             foreach (var i in Linearize())
-            {   i.RunCheck(conf);
+            {   if (!silent)
+                {   Console.WriteLine();
+                    Console.WriteLine($"Label: {i.Label}");
+                }
+                i.RunCheck(conf);
             }
             return runner.Results;
         }
 
-        public IEnumerable<InvariantResult> Failures(ConfigF config = null)
-        =>  Results(config).Where(r => r.Failed);
+        public IEnumerable<InvariantResult> Failures
+          ( ConfigF config = null
+          , bool silent = false
+          )
+        =>  Results(config, silent).Where(r => r.Failed);
 
-        public bool Passes()
-        {   var runner = InvariantRunner.Mk();
+        public bool Passes(bool silent = false)
+        {   var runner = InvariantRunner.Mk(silent);
             LabeledProperty.Check(new Configuration { Runner = runner });
             return runner.Results.All(r => r.Passed);
         }
 
-        public bool Fails()
-        => !Passes();
+        public bool Fails(bool silent = false)
+        => !Passes(silent);
 
-        public bool Check(ConfigF config = null)
-        =>  !Failures(config).Any();
+        public bool Check(ConfigF config = null, bool silent = false)
+        =>  !Failures(config, silent).Any();
 
-        public void CheckThrow(ConfigF config = null)
-        {   var xs = Failures(config).ToImmutableList();
+        public void CheckThrow(ConfigF config = null, bool silent = false)
+        {   var xs = Failures(config, silent).ToImmutableList();
             if (xs.Any())
             {   throw new Exception
                   ( string.Join("\n", xs.Select(f => f.Message))

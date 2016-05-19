@@ -28,35 +28,41 @@ namespace Sharper.C.Testing.Tests.Testing
         [Fact]
         public static void SingleInvariant_ValuePassesEquivalence()
         =>  Prop
-            .ForAll(AnyBool, b => b == ConstantInvariant(b).Passes())
+            .ForAll
+              ( AnyBool
+              , b => b == ConstantInvariant(b).Passes(silent:true)
+              )
             .Label("value <=> Passes()")
             .Run(4);
 
         [Fact]
         public static void SingleInvariant_ValueCheckEquivalence()
         =>  Prop
-            .ForAll(AnyBool, b => b == ConstantInvariant(b).Check())
+            .ForAll(AnyBool, b => b == ConstantInvariant(b).Check(silent:true))
             .Label("value <=> Check()")
             .Run(4);
 
         [Fact]
         public static void Invariant_CheckPassEquivalence()
         =>  Prop
-            .ForAll(AnyInvariant, i => i.Passes() == i.Check())
+            .ForAll
+              ( AnyInvariant
+              , i => i.Passes(silent:true) == i.Check(silent:true)
+              )
             .Label("Passes <=> Check [absent replays]")
             .Run();
 
         [Fact]
         public static void Invariant_NoFailuresIsPassing()
         =>  Prop
-            .ForAll(PassInvariant, i => i.Passes())
+            .ForAll(PassInvariant, i => i.Passes(silent:true))
             .Label("all true => pass")
             .Run();
 
         [Fact]
         public static void Invariant_NoFailuresIsCheck()
         =>  Prop
-            .ForAll(PassInvariant, i => i.Check())
+            .ForAll(PassInvariant, i => i.Check(silent:true))
             .Label("all true => check")
             .Run();
 
@@ -65,7 +71,10 @@ namespace Sharper.C.Testing.Tests.Testing
         =>  Prop
             .ForAll
               ( AnyInvariant
-              , i => i.Check() == !Throws(() => i.CheckThrow())
+              , i =>
+                    i.Check(silent:true)
+                    ==
+                    !Throws(() => i.CheckThrow(silent:true))
               )
             .Label("Check <=> CheckThrow")
             .Run();
@@ -81,6 +90,12 @@ namespace Sharper.C.Testing.Tests.Testing
         public static Invariant Invariant_XunitDiscoverySmokeTest_Replay()
         =>  "Replay smoke test".All(Invariant_XunitDiscoverySmokeTest());
 
+        [Invariant]
+        public static Invariant Int_ObeysHashingLaws()
+        =>  "Int HashingLaws".All
+              ( Laws.HashingLaws.For(AnyInt)
+              );
+
         private static bool Throws(Action a)
         {   try
             {   a();
@@ -90,12 +105,6 @@ namespace Sharper.C.Testing.Tests.Testing
             {   return true;
             }
         }
-
-        [Invariant]
-        public static Invariant Int_ObeysHashingLaws()
-        =>  "Int HashingLaws".All
-              ( Laws.HashingLaws.For(AnyInt)
-              );
 
         private static Invariant ConstantInvariant(bool pass)
         =>  $"Constant {pass}".ForAll(Arb.From(Gen.Constant(pass)), a => a);

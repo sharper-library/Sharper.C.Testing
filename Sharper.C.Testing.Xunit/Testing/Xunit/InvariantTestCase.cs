@@ -142,7 +142,7 @@ namespace Sharper.C.Testing.Xunit
             ? Tuple.Create
                 ( (IMessageSinkMessage)
                   new TestPassed(test, time, ir.Message)
-                , new RunSummary { Total = 1, Failed = 1, Time = time }
+                , new RunSummary { Total = 1, Failed = 0, Time = time }
                 )
 
             : Tuple.Create
