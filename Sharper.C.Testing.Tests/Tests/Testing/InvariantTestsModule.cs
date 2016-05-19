@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Xunit;
 using FsCheck;
@@ -94,6 +95,21 @@ namespace Sharper.C.Testing.Tests.Testing
         public static Invariant Int_ObeysHashingLaws()
         =>  "Int HashingLaws".All
               ( Laws.HashingLaws.For(AnyInt)
+              );
+
+        [Invariant]
+        public static Invariant Enumerable_ObeysMonadLaws()
+        =>  "Enumerable MonadLaws".All
+              ( Laws.MonadLaws.For
+                  ( a => Enumerable.Repeat(a, 1)
+                  , f => xs => xs.Select(f)
+                  , f => xs => xs.SelectMany(f)
+                  , (x, y) => x.SequenceEqual(y)
+                  , AnySeq(AnyBool)
+                  , AnyFunc1<bool, IEnumerable<bool>>(AnySeq(AnyBool))
+                  , AnyFunc1<bool, bool>(AnyBool)
+                  , AnyBool
+                  )
               );
 
         private static bool Throws(Action a)
