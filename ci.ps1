@@ -1,5 +1,16 @@
 $TestsRegex = '\.Tests$'
 
+$dotnetCliUrl = 'https://dotnetcli.blob.core.windows.net/dotnet/preview/Binaries/Latest/dotnet-dev-win-x64.latest.zip'
+
+if (Test-Path '.dotnet-cli/dotnet.exe') {
+    $dotnet = '.dotnet-cli/dotnet.exe'
+}
+else {
+    $dotnet = 'dotnet.exe'
+}
+
+Write-Host "dotnet: $dotnet"
+
 function AllProjects() {
     Get-ChildItem */project.json
 }
@@ -20,8 +31,17 @@ function CleanCmd() {
     if (Test-Path artifacts) {Remove-Item -Recurse artifacts}
 }
 
+function EnsureDotnetCliCmd() {
+    if (!(Test-Path '.dotnet-cli/dotnet.exe'))
+    {
+        Invoke-WebRequest $dotnetCliUrl -OutFile 'dotnet-cli.zip'
+        Expand-Archive 'dotnet-cli.zip' -Dest '.dotnet-cli'
+        $dotnet = '.dotnet-cli/dotnet.exe'
+    }
+}
+
 function InstallCmd() {
-    dotnet restore
+    & $dotnet restore
 }
 
 function BuildCmd() {
@@ -35,12 +55,12 @@ function BuildCmd() {
     }
     PackageProjects | %{
       Write-Host "Building $_"
-      dotnet pack $_.Directory -c Release
+      & $dotnet pack $_.Directory -c Release
     }
 }
 
 function TestCmd() {
-    $codes = (TestProjects) | %{dotnet test $_ | Write-Host; $LASTEXITCODE}
+    $codes = (TestProjects) | %{& $dotnet test $_ | Write-Host; $LASTEXITCODE}
     $code = ($codes | Measure-Object -Sum).Sum
     exit $code
 }
@@ -55,6 +75,7 @@ function RegisterCmd() {
 
 function RunCommand($name) {
     switch ($name) {
+        ensurecli {EnsureDotnetCliCmd}
         clean {CleanCmd}
         install {InstallCmd}
         build {BuildCmd}
