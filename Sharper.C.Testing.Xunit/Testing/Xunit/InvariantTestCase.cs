@@ -83,7 +83,9 @@ namespace Sharper.C.Testing.Xunit
             }
         }
 
+        #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
         public override async Task<RunSummary> RunAsync
+        #pragma warning restore CS1998
           ( IMessageSink diagnosticMessageSink
           , IMessageBus bus
           , object[] constructorArguments
