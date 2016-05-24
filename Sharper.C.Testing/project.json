@@ -1,11 +1,13 @@
 {
-    "version": "1.1",
+    "version": "1.2-*",
     "description": "A testing library",
     "authors": [
         "Jeremy Hughes"
     ],
-    "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing",
-    "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt",
+    "packOptions": {
+        "projectUrl": "https://github.com/sharper-library/Sharper.C.Testing",
+        "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt"
+    },
     "dependencies": {
         "FsCheck": "2.4.0",
         "System.Collections.Immutable": "1.2.0-rc2-24027",
@@ -13,10 +15,10 @@
         "Sharper.C.Eq": "1.0"
     },
     "frameworks": {
-        "dnx451": {
+        "net461": {
             "frameworkAssemblies": {
-                "System.Runtime": "4.0.10.0",
-                "System.Collections": "4.0.0.0"
+                "System.Runtime": "4.0.20.0",
+                "System.Collections": "4.0.10.0"
             }
         }
     }

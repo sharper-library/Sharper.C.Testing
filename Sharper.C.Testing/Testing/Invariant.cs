@@ -54,7 +54,7 @@ namespace Sharper.C.Testing
             var conf = (config ?? InvariantConfig.Default)(runner);
             foreach (var i in Linearize())
             {   if (!silent)
-                {   Console.WriteLine();
+                {   Console.WriteLine("");
                     Console.WriteLine($"Label: {i.Label}");
                 }
                 i.RunCheck(conf);
