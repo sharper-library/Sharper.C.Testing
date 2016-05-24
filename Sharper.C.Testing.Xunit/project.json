@@ -1,5 +1,5 @@
 {
-    "version": "1.2",
+    "version": "1.3-*",
     "description": "Xunit discovery",
     "authors": [
         "Jeremy Hughes"
@@ -9,7 +9,7 @@
         "licenseUrl": "https://raw.githubusercontent.com/sharper-library/Sharper.C.Testing/master/LICENSE.txt"
     },
     "dependencies": {
-        "Sharper.C.Testing": "1.2",
+        "Sharper.C.Testing": "1.3-*",
         "xunit": "2.1.0"
     },
     "frameworks": {
