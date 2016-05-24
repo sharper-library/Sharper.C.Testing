@@ -9,7 +9,10 @@ else {
     $dotnet = 'dotnet.exe'
 }
 
-Write-Host "dotnet: $dotnet"
+function ExtractZip($srcZip, $destDir) {
+    Add-Type -Assembly "System.IO.Compression.FileSystem"
+    [IO.Compression.ZipFile]::ExtractToDirectory($srcZip, $destDir)
+}
 
 function AllProjects() {
     Get-ChildItem */project.json
@@ -35,7 +38,7 @@ function EnsureDotnetCliCmd() {
     if (!(Test-Path '.dotnet-cli/dotnet.exe'))
     {
         Invoke-WebRequest $dotnetCliUrl -OutFile 'dotnet-cli.zip'
-        Expand-Archive 'dotnet-cli.zip' -Dest '.dotnet-cli'
+        ExtractZip 'dotnet-cli.zip' "$pwd/.dotnet-cli"
         $dotnet = '.dotnet-cli/dotnet.exe'
     }
 }
