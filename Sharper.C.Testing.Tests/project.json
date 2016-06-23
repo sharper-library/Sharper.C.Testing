@@ -1,5 +1,5 @@
 {
-    "version": "1.4-*",
+    "version": "1.4",
     "description": "A testing library (Tests)",
     "authors": [
         "Jeremy Hughes"
@@ -10,7 +10,7 @@
     },
     "testRunner": "xunit",
     "dependencies": {
-        "Sharper.C.Testing.Xunit": "1.4-*",
+        "Sharper.C.Testing.Xunit": "1.4",
         "xunit": "2.2.0-*",
         "dotnet-test-xunit": "1.0.0-*",
         "FSharp.Core": "4.0.0.1"

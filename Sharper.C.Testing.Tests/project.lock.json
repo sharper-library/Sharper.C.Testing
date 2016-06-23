@@ -847,7 +847,7 @@
     "projectFileDependencyGroups": {
         "": [
             "FSharp.Core >= 4.0.0.1",
-            "Sharper.C.Testing.Xunit >= 1.4.0-*",
+            "Sharper.C.Testing.Xunit >= 1.4.0",
             "dotnet-test-xunit >= 1.0.0-*",
             "xunit >= 2.2.0-*"
         ],

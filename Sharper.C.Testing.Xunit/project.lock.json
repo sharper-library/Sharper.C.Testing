@@ -304,7 +304,7 @@
     },
     "projectFileDependencyGroups": {
         "": [
-            "Sharper.C.Testing >= 1.4.0-*",
+            "Sharper.C.Testing >= 1.4.0",
             "xunit >= 2.2.0-*"
         ],
         ".NETFramework,Version=v4.6.1": []
