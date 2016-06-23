@@ -6,7 +6,7 @@
   </PropertyGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" />
   <PropertyGroup Label="Globals">
-    <ProjectGuid>8803713f-0599-4561-886f-525a43103003</ProjectGuid>
+    <ProjectGuid>f03aaeb3-0aea-4cc7-891e-006cb83714d3</ProjectGuid>
     <RootNamespace>Sharper.C.Testing.Xunit</RootNamespace>
     <BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' ">.\obj</BaseIntermediateOutputPath>
     <OutputPath Condition="'$(OutputPath)'=='' ">.\bin\</OutputPath>
